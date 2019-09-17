@@ -30,22 +30,22 @@
 	                    <input type="hidden" name="empNo" value="${ Id }">
                       <div class="form-group">
                         <div class="input-group">
-                           <label class="control-label col-sm-2" for="email">Email:</label>
+                           <label class="control-label col-sm-2" for="password">Password:</label>
                           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
                           <input id="password" name="password" placeholder="password" class="form-control"  type="password">
                         </div>
                       </div>
                           <div class="form-group">
                               <div class="input-group">
-                        <label class="control-label col-sm-2" for="email">Confirm:</label>
-                       <input id="cnfmpswd" name="password" placeholder="Password" class="form-control"  type="password">
+                        <label class="control-label col-sm-2" for="cnfmpswd">Confirm Password:</label>
+                       <input id="cnfmpswd" name="cnfmpswd" placeholder="Password" class="form-control"  type="password">
                       </div>
                       <div class="form-group">
                           ${ error }
                         <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Change Password" type="submit">
-                          <script>
+                         <script>
                           function confirmChange(){
-                              Swal('Hello world!')
+                              Swal('Password Change succesfully')
                           }
                           </script>
                           

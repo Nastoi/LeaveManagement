@@ -29,7 +29,7 @@
     text: "Your password has been succesfully change!",
     type: "success",
 }).then(function() {
-    window.location = "redirectURL";
+    window.location = "index.html";
 });
     function myFunction() {
 

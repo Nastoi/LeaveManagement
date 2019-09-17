@@ -25,6 +25,7 @@
 <title>HR Login</title>
 <style>
 body {
+	background-image:url(images/bkg-blu.jpg);
 	height: 100vh;
 	padding-top: 75px;
 }
@@ -38,11 +39,11 @@ body {
 			<div class="col-md-12 mx-auto">
 				<div class="row">
 					<div class="col-md-12 mb-2">
-						<img class="float-right" src="" width="" height=""
+						<img class="float-right" src="images/avensyslogo.png" width="50px;" height="50px;"
 							alt="Logo Placeholder">
 						<div class="float-left">
-							<h4>Name: "${ User.ename }"</h4>
-							<h4>Employee ID: "${ User.empNo }"</h4>
+							<h4>Name: ${ User.ename }</h4>
+							<h4>Employee ID: ${ User.empNo }</h4>
 						</div>
 					</div>
 				</div>
@@ -59,11 +60,11 @@ body {
 						<div class="form-group col-md-4">
 							<label for="leaveType">Leave Type</label> <select
 								name="leaveType" class="form-control" id="leaveType" required>
-								<option>Casual Leave</option>
-								<option>Sick Leave</option>
-								<option>Paternity Leave</option>
-								<option>Maternity Leave</option>
-								<option>Compensate Leave</option>
+								<option value="casual_leave">Casual Leave</option>
+								<option value="sick_leave">Sick Leave</option>
+								<option value="paternity_leave">Paternity Leave</option>
+								<option value="maternity_leave">Maternity Leave</option>
+								<option value="compensate_leave">Compensate Leave</option>
 							</select>
 						</div>
 						<div class="form-group col-md-4">
@@ -100,18 +101,39 @@ body {
 					<div class="form-row">
 						<div class="form-group col-md-12">
 							<button id="submit" type="submit"
-								class="btn btn-dark mb-2 float-right">Submit</button>
-							<button id="cancel" type="button"
-								class="btn btn-dark mb-2 mr-2 float-right">Cancel</button>
+								class="btn btn-success mb-2 float-right">Submit</button>
+								
+								
+								<c:url var="cancel" value="LeaveController">
+									<c:param name="empNo" value="${ User.empNo }"/>
+									<c:param name="ename" value="${ User.ename }"/>
+									<c:param name="mgr" value="${ User.mgr }"/>
+									<c:param name="command" value="BACK"/>
+								</c:url>
+				
+				
+							<a href="${ cancel }"><button id="cancel" type="button"
+								class="btn btn-danger mb-2 mr-2 float-right">Cancel</button></a>
 						</div>
 					</div>
 				</form>
+				
+				
+				<c:url var="back" value="LeaveController">
+					<c:param name="empNo" value="${ User.empNo }"/>
+					<c:param name="ename" value="${ User.ename }"/>
+					<c:param name="mgr" value="${ User.mgr }"/>
+					<c:param name="command" value="BACK"/>
+				</c:url>
+				
+				
+				
 				<div class="row">
 					<div class="col-md-12 pb-3">
-						<button id="back" type="button"
+						<a href="${ back }"><button id="back" type="button"
 							class="btn btn-light mt-3 float-left">
 							Back
-						</button>
+						</button></a>
 						<button id="logout" type="button"
 							class="btn btn-light mt-3 float-right">
 							Logout

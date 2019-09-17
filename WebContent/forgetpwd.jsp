@@ -40,8 +40,8 @@
                 </div>
                
                 <!-- FORM ACTION HERE -->
-                <form action="MainControllerServlet" method="POST">
-                        <input type="hidden" name="command" value="retrievePwd" />
+                <form action="LeaveController" method="POST">
+                        <input type="hidden" name="command" value="VALIDATE" />
                     <div class="form-group card-body">
                         <label for="empno">Employee Number: </label>
                         <input type="text" name="empno" class="form-control" id="numbersonly" value="" placeholder="Numbers Only" />

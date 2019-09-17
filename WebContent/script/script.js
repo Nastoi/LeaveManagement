@@ -9,7 +9,7 @@ $(document).ready(function() {
 			$('#totalLeaveDays').val(endDate.diff(startDate, 'days'));
 		}
 		else {
-			$('#totalLeaveDays').val('0');
+			$('#totalLeaveDays').val('1');
 		}
 	});
 	$('#leaveEndDate').change(function(){
@@ -18,7 +18,7 @@ $(document).ready(function() {
 			$('#totalLeaveDays').val(endDate.diff(startDate, 'days'));
 		}
 		else {
-			$('#totalLeaveDays').val('0');
+			$('#totalLeaveDays').val('1');
 		}
 		});
 	

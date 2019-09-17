@@ -71,7 +71,15 @@
                 transition: all 0.3s; 
             }
             .button-div{
-            	margin-top:250px;
+            	margin-top:200px;
+            }
+            a.btn{
+            	width:150px;
+            	margin-bottom:24px;
+            }
+            .button-div .function{
+            	display:flex;
+            	justify-content:flex-end;
             }
               
 
@@ -96,34 +104,35 @@
                   <tr>
                     <th scope="row">1</th>
                     <th>Casual Leaves</th>
-                    <td>6</td>
+                    <td>${ User.casual_leave }</td>
                   </tr>
                   <tr>
                     <th scope="row">2</th>
                     <th>Sick Leaves</th>
-                    <td>6</td>
+                    <td>${ User.sick_leave }</td>
                   </tr>
                 <tr>
                     <th scope="row">3</th>
                     <th>Maternity Leaves</th>
-                    <td>60</td>
+                    <td>${ User.maternity_leave }</td>
                   </tr>
                 <tr>
                     <th scope="row">4</th>
                     <th>Paternity Leaves</th>
-                    <td>10</td>
+                    <td>${ User.paternity_leave }</td>
                 </tr>
                 <tr>
                     <th scope="row">5</th>
                     <th>Compensate Leaves</th>
-                    <td>10</td>
+                    <td>${ User.compensate_leave }</td>
                 </tr>
                 </tbody>
               </table>
         	</div>
-        	<div class="col-6 d-flex button-div">
+        	<div class="col-6 button-div">
+        	
         		<div class="">
-                    <div class="">
+                    <div class="function">
                     
             <c:url var="Leave" value="LeaveController">
 				<c:param name="command" value="LEAVE" />
@@ -133,7 +142,7 @@
 			</c:url>
 			 <a href="${ Leave }" class="btn btn-info">Leave application</a>
                      </div>
-                     <div class="">
+                     <div class="function">
            <c:url var="Manage" value="LeaveController">
 				<c:param name="command" value="MANAGE" />
 				<c:param name="empNo" value="${ User.empNo }"/>
@@ -142,7 +151,7 @@
 			</c:url>
 			 <a href="${ Manage }" class="btn btn-info">Manager application</a>
                     </div>
-                    <div class="">
+                    <div class="function">
            <c:url var="DISPLAYAPPROVEDONLY" value="LeaveController">
 				<c:param name="command" value="DISPLAYAPPROVED" />
 				<c:param name="empNo" value="${ User.empNo }"/>
@@ -151,7 +160,7 @@
 			</c:url>
 			 <a href="${ DISPLAYAPPROVEDONLY }" class="btn btn-success">Approved Requests</a>
                     </div>
-                    <div class="">
+                    <div class="function">
            <c:url var="DISPLAYREJECTEDONLY" value="LeaveController">
 				<c:param name="command" value="DISPLAYREJECTED" />
 				<c:param name="empNo" value="${ User.empNo }"/>
@@ -161,6 +170,7 @@
 			 <a href="${ DISPLAYREJECTEDONLY }" class="btn btn-success">Rejected Requests</a>
                     </div>
                   </div>
+                  
         	</div>
         </div>
         <div class="row flex-column">

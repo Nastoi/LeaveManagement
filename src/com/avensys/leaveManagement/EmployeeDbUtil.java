@@ -3,7 +3,7 @@ package com.avensys.leaveManagement;
 public class EmployeeDbUtil {
 
 	public String ename, job, email, pass, role, req_Id, leaveType, endDate, startDate, reason, status, mgr1;
-	public int deptNo, empNo, mgr, totalDay, empNo1, mgrNo;
+	public int deptNo, empNo, mgr, totalDay, empNo1, mgrNo,casual_leave, sick_leave, paternity_leave,maternity_leave,compensate_leave;
 	
 	
 
@@ -75,10 +75,23 @@ public class EmployeeDbUtil {
 	public EmployeeDbUtil(String ename, int empNo, String mgr, String role) {
 		this.ename = ename;
 		this.empNo = empNo;
-		this.mgr1 = mgr1;
+		this.mgr1 = mgr;
 		this.role = role;
 	}
 
+	public EmployeeDbUtil(String ename, int empNo, int mgr, String role, int casual_leave, int sick_leave, int paternity_leave, int maternity_leave, int compensate_leave) {
+		this.ename = ename;
+		this.empNo = empNo;
+		this.mgr = mgr;
+		this.role = role;
+		this.casual_leave = casual_leave;
+		this.sick_leave = sick_leave;
+		this.maternity_leave = maternity_leave;
+		this.paternity_leave = paternity_leave;
+		this.compensate_leave = compensate_leave;
+		
+	}
+	
 	public String getEname() {
 		return ename;
 	}
@@ -199,6 +212,43 @@ public class EmployeeDbUtil {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public String getMgr1() {
+		return mgr1;
+	}
+	public void setMgr1(String mgr1) {
+		this.mgr1 = mgr1;
+	}
+	public int getCasual_leave() {
+		return casual_leave;
+	}
+	public void setCasual_leave(int casual_leave) {
+		this.casual_leave = casual_leave;
+	}
+	public int getSick_leave() {
+		return sick_leave;
+	}
+	public void setSick_leave(int sick_leave) {
+		this.sick_leave = sick_leave;
+	}
+	public int getPaternity_leave() {
+		return paternity_leave;
+	}
+	public void setPaternity_leave(int paternity_leave) {
+		this.paternity_leave = paternity_leave;
+	}
+	public int getMaternity_leave() {
+		return maternity_leave;
+	}
+	public void setMaternity_leave(int maternity_leave) {
+		this.maternity_leave = maternity_leave;
+	}
+	public int getCompensate_leave() {
+		return compensate_leave;
+	}
+	public void setCompensate_leave(int compensate_leave) {
+		this.compensate_leave = compensate_leave;
 	}
 	@Override
 	public String toString() {

@@ -69,6 +69,9 @@ public class LeaveController extends HttpServlet {
 			case "DISPLAYREJECTED":
 				displayRejectedLeaves(request,response);
 				break;
+			case "LOGOUT":
+				getUser(request,response);
+				break;
 			default:
 				leavePage(request, response);
 			}
@@ -170,10 +173,20 @@ public class LeaveController extends HttpServlet {
 		int totalDay = Integer.parseInt(request.getParameter("totalDay"));
 		String reason = request.getParameter("reason");
 		int mgrNo = Integer.parseInt(request.getParameter("mgr"));
-		
+        String mgrEmail = null;
+        String empEmail = null;
+		String text= "Dear employee " 
+	            + "\n\n Your leave has been reject!"
+	    		+ "\n Please continue to work hard!"
+	            + "\n We will not let you go until you finish your spring project"
+	    		+ "\n See what level, you jump"
+	    		+ "\n\n Regards"
+	            + "\n Mr Deepanshu Rastogi";
 		
 		Connection con = null;
         PreparedStatement pstmt = null;
+        ResultSet rst =null;
+        
         try {
         	
         	 con = dataSource.getConnection();
@@ -195,11 +208,31 @@ public class LeaveController extends HttpServlet {
 	            
 	            pstmt.executeUpdate();
             
-            
-	        	managerPage(request,response);
+	            String query2 = "SELECT email FROM employee WHERE empNo=?";
+	            pstmt = con.prepareStatement(query2);
+                pstmt.setInt(1, mgrNo);
+                rst = pstmt.executeQuery();
+                if(rst.next())
+                {
+                mgrEmail = rst.getString("email");
+                }
+                
+                String query3 = "SELECT email FROM employee WHERE empNo=?";
+                pstmt = con.prepareStatement(query3);
+                pstmt.setInt(1, empNo);
+                rst = pstmt.executeQuery();
+                if(rst.next())
+                {
+                	empEmail = rst.getString("email");
+                }
+                
+                SendEmail sm = new SendEmail();
+                sm.sendMail(mgrEmail, empEmail, text);
+
+                managerPage(request,response);
 				
 	        }finally {
-	            close(con, pstmt, null);
+	            close(con, pstmt, rst);
 	        }
         
 	}
@@ -254,6 +287,22 @@ public class LeaveController extends HttpServlet {
 			
 			Connection con = null;
 	        PreparedStatement pstmt = null;
+	        ResultSet rst = null;
+	        String mgrEmail = null;
+	        String empEmail = null;
+	        String text= "Dear employee " 
+            + "\n\n Your leave has been approved!"
+    		+ "\n Please enjoy your leave while you can!"
+            + "\n We will be waiting for you eagerly to come home"
+    		+ "\n You wait, meet me downstairs"
+            + "\n\n These are your leave information"
+    		+ "\n leave type: " + leaveType
+    		+ "\n start date: " + fromDate
+    		+ "\n end date: " + tDate
+    		+ "\n reason : " + reason
+    		+ "\n\n Regards"
+            + "\n Mr Deepanshu Rastogi";
+	        
 	        try {
 	            con = dataSource.getConnection();
 	            String query = "INSERT INTO history(empNo,leaveType,fromDate,toDate,totalDay,reason,mgr,status) VALUES(?,?,?,?,?,?,?,'approved') ";
@@ -267,17 +316,79 @@ public class LeaveController extends HttpServlet {
 	            pstmt.setInt(7, mgrNo);
 	            
 	            pstmt.executeUpdate();
-	        
+	            
 	            String query1 = "DELETE FROM request WHERE req_id=?";
 	            pstmt = con.prepareStatement(query1);
 	            pstmt.setInt(1, req_Id);
 	            pstmt.executeUpdate();
 	         
 	            
-	        	managerPage(request,response);
-				
+	            String query2 = "SELECT email FROM employee WHERE empNo=?";
+	            pstmt = con.prepareStatement(query2);
+                pstmt.setInt(1, mgrNo);
+                rst = pstmt.executeQuery();
+                if(rst.next())
+                {
+                mgrEmail = rst.getString("email");
+                }
+                
+                String query3 = "SELECT email FROM employee WHERE empNo=?";
+                pstmt = con.prepareStatement(query3);
+                pstmt.setInt(1, empNo);
+                rst = pstmt.executeQuery();
+                if(rst.next())
+                {
+                	empEmail = rst.getString("email");
+                }
+                
+                
+               switch(leaveType)
+                {
+                case "casual_leave" :
+                	String casual_leave = "UPDATE employee SET casual_leave = casual_leave-? WHERE empNo=?";
+                	pstmt = con.prepareStatement(casual_leave);
+                    pstmt.setInt(1, totalDay);
+                    pstmt.setInt(2, empNo);
+                    pstmt.executeUpdate();
+                	break;
+                case "sick_leave" :
+                	String sick_leave = "UPDATE employee SET sick_leave = sick_leave-? WHERE empNo=?";
+                	pstmt = con.prepareStatement(sick_leave);
+                    pstmt.setInt(1, totalDay);
+                    pstmt.setInt(2, empNo);
+                    pstmt.executeUpdate();
+                	break;
+                case "paternity_leave" :
+                	String paternity_leave = "UPDATE employee SET paternity_leave = paternity_leave-? WHERE empNo=?";
+                	pstmt = con.prepareStatement(paternity_leave);
+                    pstmt.setInt(1, totalDay);
+                    pstmt.setInt(2, empNo);
+                    pstmt.executeUpdate();
+                	break;
+                case "maternity_leave" :
+                	String maternity_leave = "UPDATE employee SET maternity_leave = maternity_leave-? WHERE empNo=?";
+                	pstmt = con.prepareStatement(maternity_leave);
+                    pstmt.setInt(1, totalDay);
+                    pstmt.setInt(2, empNo);
+                    pstmt.executeUpdate();
+                	break;
+                case "compensate_leave" :
+                	String compensate_leave = "UPDATE employee SET compensate_leave = compensate_leave-? WHERE empNo=?";
+                	pstmt = con.prepareStatement(compensate_leave);
+                    pstmt.setInt(1, totalDay);
+                    pstmt.setInt(2, empNo);
+                    pstmt.executeUpdate();
+                	break;
+                default:
+                	
+                }
+                
+               
 	        }finally {
-	            close(con, pstmt, null);
+	        	SendEmail sm = new SendEmail();
+                sm.sendMail(mgrEmail, empEmail, text);
+                managerPage(request,response);
+	            close(con, pstmt, rst);
 	        }
 	        
 			
@@ -356,7 +467,7 @@ public class LeaveController extends HttpServlet {
 		    }
 			else {
 		
-			request.setAttribute("errro", "password is not matching");
+			request.setAttribute("error", "password is not matching");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/changePassword.jsp");
 			dispatcher.forward(request, response);
 			}
@@ -417,11 +528,21 @@ public class LeaveController extends HttpServlet {
 	            //Date toDate = (Date) new SimpleDateFormat("YYYY/MM/DD").parse(tDate);
 
 	            Connection con = null;
-	            PreparedStatement pstmt = null;
+		        PreparedStatement pstmt = null;
+		        ResultSet rst = null;
+		        String mgrEmail = null;
+		        String empEmail = null;
+		        String text= "Dear Manager In-Charge " 
+	            + "\n\n Your employee has sent a leave request!"
+	    		+ "\n Please try not to approve but you can approve if you want!"
+	            + "\n We will be watching you"
+	    		+ "\n Who will kill??? Me"
+	    		+ "\n\n Regards"
+	            + "\n Mr Deepanshu Rastogi";
 
 	            try {
 	                con=dataSource.getConnection();
-	                String qry = "insert into employeeleaves.request (leaves_type,start_Date, end_Date,total_day,reason,empNo, mgrNo) values (?, ?, ?, ?, ?, ?, ?)";
+	                String qry = "insert into employeeleaves.request (leaves_type,start_Date, end_Date,total_day,reason,empNo, mgrNo,status) values (?, ?, ?, ?, ?, ?, ?,'pending')";
 	                pstmt= con.prepareStatement(qry);
 	                pstmt.setString(1, leaveType);
 	                pstmt.setString(2, fromDate);
@@ -441,6 +562,32 @@ public class LeaveController extends HttpServlet {
 	            }
 
 
+		         
+		            
+		            String query2 = "SELECT email FROM employee WHERE empNo=?";
+		            pstmt = con.prepareStatement(query2);
+	                pstmt.setInt(1, mgrNo);
+	                rst = pstmt.executeQuery();
+	                if(rst.next())
+	                {
+	                mgrEmail = rst.getString("email");
+	                }
+	                
+	                String query3 = "SELECT email FROM employee WHERE empNo=?";
+	                pstmt = con.prepareStatement(query3);
+	                pstmt.setInt(1, employNo);
+	                rst = pstmt.executeQuery();
+	                if(rst.next())
+	                {
+	                	empEmail = rst.getString("email");
+	                }
+	                
+	                System.out.println(leaveType);
+	                
+	                SendEmail sm = new SendEmail();
+	                sm.sendMail(mgrEmail, empEmail, text);
+
+	                managerPage(request,response);
 
 	    }
 			
@@ -529,7 +676,7 @@ public class LeaveController extends HttpServlet {
 			PreparedStatement pstmt=null;
 			ResultSet rst=null;
 			String qry="select * from employee where empno = ? and password= ?";
-			
+			EmployeeDbUtil employee= null;
 				// Create the connection
 				con = dataSource.getConnection();
 				//System.out.println("Connection established successfully");
@@ -541,16 +688,19 @@ public class LeaveController extends HttpServlet {
 				if(rst.next())
 				{
 					System.out.println("Congratulations......");
-					
+					employee = new EmployeeDbUtil();
 					String ename = rst.getString("ename");
 					int empno = empNo;
 					int mgr = rst.getInt("mgr");
 					String role = rst.getString("role");
-					if(!role.equalsIgnoreCase("manager")) { // if role is not a manager, then show the manager's name
-						String get_mgr_name_query = "SELECT ename FROM employee WHERE mgr = 0";
-					}
-					// EmployeeDbUtil  employee = new EmployeeDbUtil(ename,empNo,mgr,role);
-					EmployeeDbUtil  employee = new EmployeeDbUtil(ename,empNo,mgr,role);
+					int casual_leave = rst.getInt("casual_leave");
+					int sick_leave = rst.getInt("sick_leave");
+					int paternity_leave = rst.getInt("paternity_leave");
+					int maternity_leave = rst.getInt("maternity_leave");
+					int compensate_leave = rst.getInt("compensate_leave");
+					
+							//employee = new EmployeeDbUtil(ename,empNo,mgr,role);
+					employee = new EmployeeDbUtil(ename,empNo,mgr,role,casual_leave, sick_leave, paternity_leave, maternity_leave, compensate_leave);
 					
 					request.setAttribute("User", employee );
 					
