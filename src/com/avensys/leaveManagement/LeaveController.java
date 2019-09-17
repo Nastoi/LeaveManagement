@@ -63,6 +63,12 @@ public class LeaveController extends HttpServlet {
 				getUser(request,response);
 			case "REJECT":
 				rejectLeave(request,response);
+			case "DISPLAYAPPROVED":
+				displayApprovedLeaves(request,response);
+				break;
+			case "DISPLAYREJECTED":
+				displayRejectedLeaves(request,response);
+				break;
 			default:
 				leavePage(request, response);
 			}
@@ -75,27 +81,126 @@ public class LeaveController extends HttpServlet {
 
 
 
+	private void displayRejectedLeaves(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		// TODO Auto-generated method stub
+		List<EmployeeDbUtil> listEmployee = new ArrayList<>();
+		EmployeeDbUtil employee = null;
+		
+		Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            con = dataSource.getConnection();
+            String query = "SELECT * FROM history WHERE status='reject'";
+            pstmt = con.prepareStatement(query);
+            rs = pstmt.executeQuery();
+            
+            while(rs.next())
+           	{
+            	String req_Id = rs.getString("hist_id");
+            	String leaveType = rs.getString("leaveType");
+            	String startDate = rs.getString("fromDate");
+            	String endDate = rs.getString("toDate");
+            	int totalDay = Integer.parseInt(rs.getString("totalDay"));
+            	String reason = rs.getString("reason");
+            	int empNo1 = rs.getInt("empNo");
+            	int mgrNo = rs.getInt("mgr");
+            	String status = rs.getString("status");
+            	
+            	employee = new EmployeeDbUtil(req_Id, leaveType, startDate, endDate, totalDay, reason, empNo1, mgrNo,status);
+            	listEmployee.add(employee);
+          	}
+            
+            request.setAttribute("TEAM_APPROVED_DECLINED_LIST", listEmployee);
+  
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/manager_approved_declined_list.jsp");
+			dispatcher.forward(request, response);
+			
+        }finally {
+            close(con, pstmt, rs);
+        }
+	}
+
+	private void displayApprovedLeaves(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		List<EmployeeDbUtil> listEmployee = new ArrayList<>();
+		EmployeeDbUtil employee = null;
+		
+		Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            con = dataSource.getConnection();
+            String query = "SELECT * FROM history WHERE status='approved'";
+            pstmt = con.prepareStatement(query);
+            rs = pstmt.executeQuery();
+            
+            while(rs.next())
+           	{
+            	String req_Id = rs.getString("hist_id");
+            	String leaveType = rs.getString("leaveType");
+            	String startDate = rs.getString("fromDate");
+            	String endDate = rs.getString("toDate");
+            	int totalDay = Integer.parseInt(rs.getString("totalDay"));
+            	String reason = rs.getString("reason");
+            	int empNo1 = rs.getInt("empNo");
+            	int mgrNo = rs.getInt("mgr");
+            	String status = rs.getString("status");
+            	
+            	employee = new EmployeeDbUtil(req_Id, leaveType, startDate, endDate, totalDay, reason, empNo1, mgrNo,status);
+            	listEmployee.add(employee);
+          	}
+            
+            request.setAttribute("TEAM_APPROVED_DECLINED_LIST", listEmployee);
+  
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/manager_approved_declined_list.jsp");
+			dispatcher.forward(request, response);
+			
+        }finally {
+            close(con, pstmt, rs);
+        }
+	}
+
 	private void rejectLeave(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		int reqId = Integer.parseInt(request.getParameter("reqId"));
+		int empNo = Integer.parseInt(request.getParameter("empNo"));
+		String leaveType = request.getParameter("leaveType");
+		String fromDate = request.getParameter("startDate");
+		String tDate = request.getParameter("endDate");
+		int totalDay = Integer.parseInt(request.getParameter("totalDay"));
+		String reason = request.getParameter("reason");
+		int mgrNo = Integer.parseInt(request.getParameter("mgr"));
 		
 		
 		Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = dataSource.getConnection();
-            String query = "DELETE FROM request WHERE req_Id=? ";
-            pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, reqId);
+        	
+        	 con = dataSource.getConnection();
+	            String query = "INSERT INTO history(empNo,leaveType,fromDate,toDate,totalDay,reason,mgr,status) VALUES(?,?,?,?,?,?,?,'reject') ";
+	            pstmt = con.prepareStatement(query);
+	            pstmt.setInt(1, empNo);
+	            pstmt.setString(2, leaveType);
+	            pstmt.setString(3, fromDate);
+	            pstmt.setString(4, tDate);
+	            pstmt.setInt(5, totalDay);
+	            pstmt.setString(6, reason);
+	            pstmt.setInt(7, mgrNo);
+	            
+	            pstmt.executeUpdate();
+	            
+	            String query1 = "DELETE FROM request WHERE req_Id=? ";
+	            pstmt = con.prepareStatement(query1);
+	            pstmt.setInt(1, reqId);
+	            
+	            pstmt.executeUpdate();
             
-            pstmt.executeUpdate();
             
-            
-        	managerPage(request,response);
-			
-        }finally {
-            close(con, pstmt, null);
-        }
+	        	managerPage(request,response);
+				
+	        }finally {
+	            close(con, pstmt, null);
+	        }
         
 	}
 	/**
@@ -137,14 +242,6 @@ public class LeaveController extends HttpServlet {
 	
 		private void approveLeave(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			
-			System.out.println(request.getParameter("empNo"));
-			System.out.println(request.getParameter("leaveType"));
-			System.out.println(request.getParameter("startDate"));
-			System.out.println(request.getParameter("endDate"));
-			System.out.println(request.getParameter("totalDay"));
-			System.out.println(request.getParameter("reason"));
-			System.out.println(request.getParameter("mgr"));
-			System.out.println(request.getParameter("reqId"));
 			
 			int empNo = Integer.parseInt(request.getParameter("empNo"));
 			String leaveType = request.getParameter("leaveType");
@@ -159,7 +256,7 @@ public class LeaveController extends HttpServlet {
 	        PreparedStatement pstmt = null;
 	        try {
 	            con = dataSource.getConnection();
-	            String query = "INSERT INTO history(empNo,leaveType,fromDate,toDate,totalDay,reason,mgr,status) VALUES (empNo=?,leaveType=?,fromDate=?,toDate=?,totalDay=?,reason=?,mgr=?,status='approved') ";
+	            String query = "INSERT INTO history(empNo,leaveType,fromDate,toDate,totalDay,reason,mgr,status) VALUES(?,?,?,?,?,?,?,'approved') ";
 	            pstmt = con.prepareStatement(query);
 	            pstmt.setInt(1, empNo);
 	            pstmt.setString(2, leaveType);
@@ -170,18 +267,19 @@ public class LeaveController extends HttpServlet {
 	            pstmt.setInt(7, mgrNo);
 	            
 	            pstmt.executeUpdate();
-	            
+	        
 	            String query1 = "DELETE FROM request WHERE req_id=?";
 	            pstmt = con.prepareStatement(query1);
 	            pstmt.setInt(1, req_Id);
-	            
 	            pstmt.executeUpdate();
+	         
 	            
 	        	managerPage(request,response);
 				
 	        }finally {
 	            close(con, pstmt, null);
 	        }
+	        
 			
 		}
 	

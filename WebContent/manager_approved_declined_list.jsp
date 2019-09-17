@@ -2,7 +2,7 @@
 
 <html>
 <head>
-	<title>Manager Leave Approval Page</title>
+	<title>Manager  Page</title>
 	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -12,12 +12,7 @@
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-<!--<c:url var="tempLink" value="EmployeeController">
-			<c:param name="command" value="DISPLAYTEAM"/>
-			<c:param name="studentId" value="${ temp.id }"/></c:url> -->
-			
-	<!-- <form name="manager" Method="GET">
-	<input type="button" value="DISPLAYTEAM" name="command" > -->
+
 	
 	
 	<div class="container" style="margin-top: 150px; margin-left: 40px;">
@@ -38,7 +33,7 @@
             
                 
           <tbody>
-            <c:forEach var="temp" items="${ TEAM_LIST }">
+            <c:forEach var="temp" items="${ TEAM_APPROVED_DECLINED_LIST }">
                 <tr>
                   <th scope="row" class="text-center">${ temp.req_Id }</th>
                   <td class="text-center">${ temp.leaveType }</td> 
@@ -47,43 +42,13 @@
                   <td class="text-center">${ temp.totalDay }</td>
                   <td class="text-center">${ temp.reason }</td>
                   <td class="text-center">${ temp.empNo }</td>
-                 
-                 
-                 <c:url var="Approve" value="LeaveController">
-					<c:param name="command" value="APPROVE" />
-					<c:param name="leaveType" value="${ temp.leaveType }"/>
-					<c:param name="startDate" value="${ temp.startDate }"/>
-					<c:param name="endDate" value="${ temp.endDate }"/>
-					<c:param name="totalDay" value="${ temp.totalDay }"/>
-					<c:param name="reason" value="${ temp.reason }"/>
-					<c:param name="empNo" value="${ temp.empNo }"/>
-					<c:param name="reqId" value="${ temp.req_Id }" />
-					<c:param name="mgr" value="${ Id }"/>
-					<c:param name="empNo" value="${ Id }" />
-					<c:param name="status" value="approve" />
-				</c:url>
-			
-				<c:url var="Reject" value="LeaveController">
-					<c:param name="command" value="REJECT" />
-					<c:param name="command" value="APPROVE" />
-					<c:param name="leaveType" value="${ temp.leaveType }"/>
-					<c:param name="startDate" value="${ temp.startDate }"/>
-					<c:param name="endDate" value="${ temp.endDate }"/>
-					<c:param name="totalDay" value="${ temp.totalDay }"/>
-					<c:param name="reason" value="${ temp.reason }"/>
-					<c:param name="empNo" value="${ temp.empNo }"/>
-					<c:param name="reqId" value="${ temp.req_Id }" />
-					<c:param name="mgr" value="${ Id }"/>
-					<c:param name="empNo" value="${ Id }" />
-					<c:param name="status" value="reject" />
-				</c:url>
-					
-                  <td class="text-center"><a href="${ Approve }"><button type="button" class="btn btn-primary" >Approve</button></a>&nbsp;
-                  <a href="${ Reject }"><button type="button" class="btn btn-danger">Decline</button></a></td>
+                  <td class="text-center">${ temp.status }</td>
+
                 </tr> 
              </c:forEach>
           </tbody>
         </table>
+        <a href="Employee_Welcome.jsp"><button class="btn btn-info">Back To Main Page</button></a>
 </div>
 		
 		

@@ -2,11 +2,23 @@ package com.avensys.leaveManagement;
 
 public class EmployeeDbUtil {
 
-	public String ename, job, email, pass, role, req_Id, leaveType, endDate, startDate, reason;
+	public String ename, job, email, pass, role, req_Id, leaveType, endDate, startDate, reason, status;
 	public int deptNo, empNo, mgr, totalDay, empNo1, mgrNo;
 	
 	
 
+	public EmployeeDbUtil(String req_Id, String leaveType, String startDate, String endDate, int totalDay,
+			String reason, int empNo, int mgrNo,String status) {
+		this.req_Id = req_Id;
+		this.leaveType = leaveType;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.totalDay = totalDay;
+		this.reason = reason;
+		this.empNo = empNo;
+		this.mgrNo = mgrNo;
+		this.status = status;
+	}
 	public EmployeeDbUtil(String req_Id, String leaveType, String startDate, String endDate, int totalDay,
 			String reason, int empNo, int mgrNo) {
 		this.req_Id = req_Id;
@@ -169,10 +181,18 @@ public class EmployeeDbUtil {
 		this.mgrNo = mgrNo;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
-		return "EmployeeDbUtil [ename=" + ename + ", job=" + job + ", mgr=" + mgr + ", email=" + email + ", pass="
-				+ pass + ", deptNo=" + deptNo + ", empNo=" + empNo + "]";
+		return "EmployeeDbUtil [ename=" + ename + ", job=" + job + ", email=" + email + ", pass=" + pass + ", role="
+				+ role + ", req_Id=" + req_Id + ", leaveType=" + leaveType + ", endDate=" + endDate + ", startDate="
+				+ startDate + ", reason=" + reason + ", status=" + status + ", deptNo=" + deptNo + ", empNo=" + empNo
+				+ ", mgr=" + mgr + ", totalDay=" + totalDay + ", empNo1=" + empNo1 + ", mgrNo=" + mgrNo + "]";
 	}
 
 

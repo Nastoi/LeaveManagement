@@ -60,8 +60,7 @@
             <header>
                 <div class="container clearfix">
                     <h1 id="logo">
-                       Welcome ${ User.ename }
-                       id: ${ User.empNo }
+                       Welcome 
                     </h1>
 
                 </div>

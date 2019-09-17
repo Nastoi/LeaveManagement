@@ -28,7 +28,8 @@
 				<c:param name="mgr" value="${ User.mgr }"/>
 			</c:url>
 			 <a href="${ Leave }" class="btn btn-info">Leave application</a>
-                     
+                     </div>
+                     <div class="col-2">
            <c:url var="Manage" value="LeaveController">
 				<c:param name="command" value="MANAGE" />
 				<c:param name="empNo" value="${ User.empNo }"/>
@@ -37,7 +38,24 @@
 			</c:url>
 			 <a href="${ Manage }" class="btn btn-info">Manager application</a>
                     </div>
-                    
+                    <div class="col-2">
+           <c:url var="DISPLAYAPPROVEDONLY" value="LeaveController">
+				<c:param name="command" value="DISPLAYAPPROVED" />
+				<c:param name="empNo" value="${ User.empNo }"/>
+				<c:param name="ename" value="${ User.ename }"/>
+				<c:param name="mgr" value="${ User.mgr }"/>
+			</c:url>
+			 <a href="${ DISPLAYAPPROVEDONLY }" class="btn btn-success">Approved Requests</a>
+                    </div>
+                    <div class="col-2">
+           <c:url var="DISPLAYREJECTEDONLY" value="LeaveController">
+				<c:param name="command" value="DISPLAYREJECTED" />
+				<c:param name="empNo" value="${ User.empNo }"/>
+				<c:param name="ename" value="${ User.ename }"/>
+				<c:param name="mgr" value="${ User.mgr }"/>
+			</c:url>
+			 <a href="${ DISPLAYREJECTEDONLY }" class="btn btn-success">Rejected Requests</a>
+                    </div>
                   </div>
             </div>
               
