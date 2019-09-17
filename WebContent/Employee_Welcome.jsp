@@ -12,9 +12,154 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css" />
+    
+        <style>
+        
+    body{
+                background-image: url(bkg-blu.png);
+                background-size: cover;
+                
+        }
+    
+    #tab1{
+              
+            max-width: 500px;
+            max-height: 500px;
+            margin-left:30px;; 
+            margin-top:150px;
+            text-align: center;
+        
+    }
+       
+        #tab2{
+              
+            max-width: 500px;
+            max-height: 500px;
+            margin-left:30px;; 
+            margin-top:20px;
+            text-align: center;
+    }
+         header {
+              width: 100%;
+              height: 130px;
+              overflow: hidden;
+              position: fixed;
+              top: 0;
+              left: 0;
+              z-index: 999;
+              background-color: #0683c9;
+              -webkit-transition: height 0.3s;
+              -moz-transition: height 0.3s;
+              -ms-transition: height 0.3s;
+              -o-transition: height 0.3s;
+              transition: height 0.3s; 
+            }
+              header h1#logo {
+                display: inline-block;
+                height: 150px;
+                line-height: 150px;
+                float: left;
+                  
+                font-family: "Oswald", sans-serif;
+                font-size: 50px;
+                color: white;
+                font-weight: 400;
+                -webkit-transition: all 0.3s;
+                -moz-transition: all 0.3s;
+                -ms-transition: all 0.3s;
+                -o-transition: all 0.3s;
+                transition: all 0.3s; 
+            }
+              
+
+    </style>
+    
   </head>
   <body>
+  
         <jsp:include page="header.jsp"/>
+        
+        
+        
+        
+        
+        <table class="table table-bordered table-hover" id="tab1">
+                <thead>
+                  <tr>
+                    <th style="color: brown">S.No</th>
+                    <th style="color: brown">Leave Type</th>
+                    <th style="color: brown">Remaining(<b>In Days</b>)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <th>Casual Leaves</th>
+                    <td>6</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <th>Sick Leaves</th>
+                    <td>6</td>
+                  </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <th>Maternity Leaves</th>
+                    <td>60</td>
+                  </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <th>Paternity Leaves</th>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <th scope="row">5</th>
+                    <th>Compensate Leaves</th>
+                    <td>10</td>
+                </tr>
+                </tbody>
+              </table>
+              
+              <h3 style="margin-left: 30px; color: brown">Personal Information</h3>
+      <table class="table table-bordered table-hover" id="tab2">
+
+                <tbody>
+
+
+                  <tr>
+                        <th scope="row">1 </th>
+                    <th scope="row">Emp Name</th>
+
+                    <td>${ User.ename }</td>
+                  </tr>
+                  <tr>
+                        <th scope="row">2 </th>
+                    <th scope="row">Emp No</th>
+                    <td>${ User.empNo }</td>
+                  </tr>
+                  <tr>
+                        <th scope="row">3 </th>
+                        <th scope="row">Reporting Manager</th>
+                        <td></td>
+                      </tr>
+                      <tr>
+                            <th scope="row">4 </th>
+                            <th scope="row">Manager No</th>
+                            <td>${ User.mgr }</td>
+                          </tr>
+                          <tr>
+                                <th scope="row">5 </th>
+                                <th scope="row">Designation</th>
+                                <td>${ User.role }</td>
+                              </tr>
+                </tbody>
+              </table>
+              
+              
+              
+              
+              
+              
       <div class="body-wrapper" style="margin-top: 150px;">
           <div class="container">
             <div class="content-wrapper">

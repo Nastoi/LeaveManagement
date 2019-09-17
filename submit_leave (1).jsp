@@ -20,7 +20,7 @@
 <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<script src="script/script.js"></script>
+<script src="script.js"></script>
 
 <title>HR Login</title>
 <style>
@@ -33,6 +33,12 @@ body {
 
 <body>
 
+	<!-- URL Parameters for Cancel, Back and Logout -->
+	<c:url var="back" value="LeaveController">
+		<c:param name="command" value="back" />
+		<c:param name="id" value="${ employee.getId() }" />
+	</c:url>
+
 	<div class="container h-100">
 		<div class="row h-100">
 			<div class="col-md-12 mx-auto">
@@ -41,8 +47,8 @@ body {
 						<img class="float-right" src="" width="" height=""
 							alt="Logo Placeholder">
 						<div class="float-left">
-							<h4>Name: "${ User.ename }"</h4>
-							<h4>Employee ID: "${ User.empNo }"</h4>
+							<h4>Name: "${ empNo }"</h4>
+							<h4>Employee ID: "${ empNo }"</h4>
 						</div>
 					</div>
 				</div>
@@ -52,9 +58,9 @@ body {
 				<form id="form" action="LeaveController" method="GET"
 					style="background-color: #EDF5E1; padding: 40px">
 					<input type="hidden" id="command" name="command" value="ADD"> 
-					<input type="hidden" id="empNo" name="empNo" value="${ User.empNo }">
-					<input type="hidden" id="mgr" name="mgr" value="${ User.mgr }">
-					<input type="hidden" id="ename" name="ename" value="${ User.ename }">
+					<input type="hidden" id="empNo" name="empNo" value="${ empNo }">
+					<input type="hidden" id="mgr" name="mgr" value="${ mgr }">
+					<input type="hidden" id="ename" name="ename" value="${ ename }">
 					<div class="form-row">
 						<div class="form-group col-md-4">
 							<label for="leaveType">Leave Type</label> <select

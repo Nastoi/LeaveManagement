@@ -81,7 +81,7 @@ public class LeaveController extends HttpServlet {
 
 
 
-	private void displayRejectedLeaves(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+	private void displayRejectedLeaves(HttpServletRequest request, HttpServletResponse response) throws SQLException, Exception, IOException {
 		// TODO Auto-generated method stub
 		List<EmployeeDbUtil> listEmployee = new ArrayList<>();
 		EmployeeDbUtil employee = null;
@@ -402,46 +402,50 @@ public class LeaveController extends HttpServlet {
 
 		private void addLeave(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			
+
+	            System.out.println(request.getParameter("empNo"));
+	            System.out.println(request.getParameter("leaveType"));
+	            String ename = request.getParameter("ename");
+	            int employNo = Integer.parseInt(request.getParameter("empNo"));
+	            String leaveType = request.getParameter("leaveType");
+	            String fromDate = request.getParameter("leaveStartDate");
+	            String tDate = request.getParameter("leaveEndDate");
+	            int totalDay = Integer.parseInt(request.getParameter("totalLeaveDays"));
+	            String reason = request.getParameter("leaveReason");
+	            int mgrNo = Integer.parseInt(request.getParameter("mgr"));
+	            //Date frmDate = (Date) new SimpleDateFormat("YYYY/MM/DD").parse(fromDate);
+	            //Date toDate = (Date) new SimpleDateFormat("YYYY/MM/DD").parse(tDate);
+
+	            Connection con = null;
+	            PreparedStatement pstmt = null;
+
+	            try {
+	                con=dataSource.getConnection();
+	                String qry = "insert into employeeleaves.request (leaves_type,start_Date, end_Date,total_day,reason,empNo, mgrNo) values (?, ?, ?, ?, ?, ?, ?)";
+	                pstmt= con.prepareStatement(qry);
+	                pstmt.setString(1, leaveType);
+	                pstmt.setString(2, fromDate);
+	                pstmt.setString(3, tDate);
+	                pstmt.setInt(4, totalDay);
+	                pstmt.setString(5, reason);
+	                pstmt.setInt(6, employNo);
+	                pstmt.setInt(7, mgrNo);
+
+	                pstmt.execute();
+	                System.out.println("Inserted");
+
+	                getUser(request,response);
+	            }
+	            finally {
+	                close(con, pstmt, null);
+	            }
+
+
+
+	    }
 			
-			int employNo = Integer.parseInt(request.getParameter("empNo"));
-			String leaveType = request.getParameter("leaveType");
-			String fromDate = request.getParameter("fromDate");
-			String tDate = request.getParameter("toDate");
-			int totalDay = Integer.parseInt(request.getParameter("totalDay"));
-			String reason = request.getParameter("reason");
-			int mgrNo = Integer.parseInt(request.getParameter("mgr"));
-			//Date frmDate = (Date) new SimpleDateFormat("YYYY/MM/DD").parse(fromDate);
-			//Date toDate = (Date) new SimpleDateFormat("YYYY/MM/DD").parse(tDate);
-			String ename = request.getParameter("ename");
-			int empNo = Integer.parseInt(request.getParameter("empNo"));
-			
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			
-			try {
-				con=dataSource.getConnection();
-				String qry = "insert into employeeleaves.request (leaves_type,start_Date, end_Date,total_day,reason,empNo, mgrNo) values (?, ?, ?, ?, ?, ?, ?)";
-				pstmt= con.prepareStatement(qry);
-				pstmt.setString(1, leaveType);
-				pstmt.setString(2, fromDate);
-				pstmt.setString(3, tDate);
-				pstmt.setInt(4, totalDay);
-				pstmt.setString(5, reason);
-				pstmt.setInt(6, employNo);
-				pstmt.setInt(7, mgrNo);
 				
-				pstmt.execute();
-				System.out.println("Inserted");
-				
-				getUser(request,response);
-			}
-			finally {
-				close(con, pstmt, null);
-			}
-			
-				
-		
-	}
+	
 
 		private void getUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			int empNo = Integer.parseInt(request.getParameter("empNo"));
@@ -541,8 +545,9 @@ public class LeaveController extends HttpServlet {
 					String ename = rst.getString("ename");
 					int empno = empNo;
 					int mgr = rst.getInt("mgr");
+					String role = rst.getString("role");
 					
-					EmployeeDbUtil  employee = new EmployeeDbUtil(ename,empNo,mgr);
+					EmployeeDbUtil  employee = new EmployeeDbUtil(ename,empNo,mgr,role);
 					
 					
 					request.setAttribute("User", employee );

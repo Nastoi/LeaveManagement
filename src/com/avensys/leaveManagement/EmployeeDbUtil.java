@@ -2,7 +2,7 @@ package com.avensys.leaveManagement;
 
 public class EmployeeDbUtil {
 
-	public String ename, job, email, pass, role, req_Id, leaveType, endDate, startDate, reason, status;
+	public String ename, job, email, pass, role, req_Id, leaveType, endDate, startDate, reason, status, mgr1;
 	public int deptNo, empNo, mgr, totalDay, empNo1, mgrNo;
 	
 	
@@ -65,6 +65,19 @@ public class EmployeeDbUtil {
 		this.mgr =mgr;
 	}
 
+	public EmployeeDbUtil(String ename, int empNo, int mgr, String role) {
+		this.ename = ename;
+		this.empNo = empNo;
+		this.mgr = mgr;
+		this.role = role;
+	}
+	
+	public EmployeeDbUtil(String ename, int empNo, String mgr, String role) {
+		this.ename = ename;
+		this.empNo = empNo;
+		this.mgr1 = mgr1;
+		this.role = role;
+	}
 
 	public String getEname() {
 		return ename;
