@@ -59,6 +59,10 @@ public class LeaveController extends HttpServlet {
 			case "APPROVE":
 				approveLeave(request,response);
 				break;
+			case "BACK":
+				getUser(request,response);
+			case "REJECT":
+				rejectLeave(request,response);
 			default:
 				leavePage(request, response);
 			}
@@ -71,6 +75,29 @@ public class LeaveController extends HttpServlet {
 
 
 
+	private void rejectLeave(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		int reqId = Integer.parseInt(request.getParameter("reqId"));
+		
+		
+		Connection con = null;
+        PreparedStatement pstmt = null;
+        try {
+            con = dataSource.getConnection();
+            String query = "DELETE FROM request WHERE req_Id=? ";
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, reqId);
+            
+            pstmt.executeUpdate();
+            
+            
+        	managerPage(request,response);
+			
+        }finally {
+            close(con, pstmt, null);
+        }
+        
+	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -96,6 +123,7 @@ public class LeaveController extends HttpServlet {
 			case "UPDATEPSWD":
 				updatePassword(request,response);
 				break;
+				
 			default:
 				loginUser(request, response);
 			}

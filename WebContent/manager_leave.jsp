@@ -5,7 +5,7 @@
 	<title>Manager Leave Approval Page</title>
 </head>
 <body>
-
+<jsp:include page="header.jsp"/>
 <!--<c:url var="tempLink" value="EmployeeController">
 			<c:param name="command" value="DISPLAYTEAM"/>
 			<c:param name="studentId" value="${ temp.id }"/></c:url> -->
@@ -49,7 +49,13 @@
 			</c:url>
 			
 			<td><a href="${ Approve }">Approve</a></td>
-			<td><a href="#">Reject</a></td>
+			
+			<c:url var="Reject" value="LeaveController">
+				<c:param name="command" value="REJECT" />
+				<c:param name="empNo" value="${ Id }" />
+				<c:param name="reqId" value="${ temp.req_Id }" />
+			</c:url>
+			<td><a href="${ Reject }">Reject</a></td>
 		</tr>
 		</c:forEach>
 		
