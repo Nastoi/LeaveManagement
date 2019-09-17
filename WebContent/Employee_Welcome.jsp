@@ -70,6 +70,9 @@
                 -o-transition: all 0.3s;
                 transition: all 0.3s; 
             }
+            .button-div{
+            	margin-top:250px;
+            }
               
 
     </style>
@@ -78,12 +81,10 @@
   <body>
   
         <jsp:include page="header.jsp"/>
-        
-        
-        
-        
-        
-        <table class="table table-bordered table-hover" id="tab1">
+        <div class="container">
+        <div class="row">
+        	<div class="col-6">
+        		<table class="table table-bordered table-hover" id="tab1">
                 <thead>
                   <tr>
                     <th style="color: brown">S.No</th>
@@ -119,8 +120,51 @@
                 </tr>
                 </tbody>
               </table>
-              
-              <h3 style="margin-left: 30px; color: brown">Personal Information</h3>
+        	</div>
+        	<div class="col-6 d-flex button-div">
+        		<div class="">
+                    <div class="">
+                    
+            <c:url var="Leave" value="LeaveController">
+				<c:param name="command" value="LEAVE" />
+				<c:param name="empNo" value="${ User.empNo }"/>
+				<c:param name="ename" value="${ User.ename }"/>
+				<c:param name="mgr" value="${ User.mgr }"/>
+			</c:url>
+			 <a href="${ Leave }" class="btn btn-info">Leave application</a>
+                     </div>
+                     <div class="">
+           <c:url var="Manage" value="LeaveController">
+				<c:param name="command" value="MANAGE" />
+				<c:param name="empNo" value="${ User.empNo }"/>
+				<c:param name="ename" value="${ User.ename }"/>
+				<c:param name="mgr" value="${ User.mgr }"/>
+			</c:url>
+			 <a href="${ Manage }" class="btn btn-info">Manager application</a>
+                    </div>
+                    <div class="">
+           <c:url var="DISPLAYAPPROVEDONLY" value="LeaveController">
+				<c:param name="command" value="DISPLAYAPPROVED" />
+				<c:param name="empNo" value="${ User.empNo }"/>
+				<c:param name="ename" value="${ User.ename }"/>
+				<c:param name="mgr" value="${ User.mgr }"/>
+			</c:url>
+			 <a href="${ DISPLAYAPPROVEDONLY }" class="btn btn-success">Approved Requests</a>
+                    </div>
+                    <div class="">
+           <c:url var="DISPLAYREJECTEDONLY" value="LeaveController">
+				<c:param name="command" value="DISPLAYREJECTED" />
+				<c:param name="empNo" value="${ User.empNo }"/>
+				<c:param name="ename" value="${ User.ename }"/>
+				<c:param name="mgr" value="${ User.mgr }"/>
+			</c:url>
+			 <a href="${ DISPLAYREJECTEDONLY }" class="btn btn-success">Rejected Requests</a>
+                    </div>
+                  </div>
+        	</div>
+        </div>
+        <div class="row flex-column">
+        	<h3 style="margin-left: 30px; color: brown">Personal Information</h3>
       <table class="table table-bordered table-hover" id="tab2">
 
                 <tbody>
@@ -154,58 +198,26 @@
                               </tr>
                 </tbody>
               </table>
+        </div>
+        </div>
+        	
+        	
+              
+        
+        
+        
+        
               
               
               
               
               
               
-      <div class="body-wrapper" style="margin-top: 150px;">
-          <div class="container">
-            <div class="content-wrapper">
-                <div class="row">
-                    <div class="col-2">
-                    
-            <c:url var="Leave" value="LeaveController">
-				<c:param name="command" value="LEAVE" />
-				<c:param name="empNo" value="${ User.empNo }"/>
-				<c:param name="ename" value="${ User.ename }"/>
-				<c:param name="mgr" value="${ User.mgr }"/>
-			</c:url>
-			 <a href="${ Leave }" class="btn btn-info">Leave application</a>
-                     </div>
-                     <div class="col-2">
-           <c:url var="Manage" value="LeaveController">
-				<c:param name="command" value="MANAGE" />
-				<c:param name="empNo" value="${ User.empNo }"/>
-				<c:param name="ename" value="${ User.ename }"/>
-				<c:param name="mgr" value="${ User.mgr }"/>
-			</c:url>
-			 <a href="${ Manage }" class="btn btn-info">Manager application</a>
-                    </div>
-                    <div class="col-2">
-           <c:url var="DISPLAYAPPROVEDONLY" value="LeaveController">
-				<c:param name="command" value="DISPLAYAPPROVED" />
-				<c:param name="empNo" value="${ User.empNo }"/>
-				<c:param name="ename" value="${ User.ename }"/>
-				<c:param name="mgr" value="${ User.mgr }"/>
-			</c:url>
-			 <a href="${ DISPLAYAPPROVEDONLY }" class="btn btn-success">Approved Requests</a>
-                    </div>
-                    <div class="col-2">
-           <c:url var="DISPLAYREJECTEDONLY" value="LeaveController">
-				<c:param name="command" value="DISPLAYREJECTED" />
-				<c:param name="empNo" value="${ User.empNo }"/>
-				<c:param name="ename" value="${ User.ename }"/>
-				<c:param name="mgr" value="${ User.mgr }"/>
-			</c:url>
-			 <a href="${ DISPLAYREJECTEDONLY }" class="btn btn-success">Rejected Requests</a>
-                    </div>
-                  </div>
-            </div>
               
-          </div>
-      </div>
+              
+
+                
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

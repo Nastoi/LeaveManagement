@@ -546,9 +546,11 @@ public class LeaveController extends HttpServlet {
 					int empno = empNo;
 					int mgr = rst.getInt("mgr");
 					String role = rst.getString("role");
-					
+					if(!role.equalsIgnoreCase("manager")) { // if role is not a manager, then show the manager's name
+						String get_mgr_name_query = "SELECT ename FROM employee WHERE mgr = 0";
+					}
+					// EmployeeDbUtil  employee = new EmployeeDbUtil(ename,empNo,mgr,role);
 					EmployeeDbUtil  employee = new EmployeeDbUtil(ename,empNo,mgr,role);
-					
 					
 					request.setAttribute("User", employee );
 					
