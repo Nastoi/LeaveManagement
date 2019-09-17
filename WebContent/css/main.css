@@ -1,0 +1,43 @@
+body{
+    width:100%;
+    height:auto;
+    background-image: url(../css/bkg-blu.jpg);
+}
+.header .header-fade-in{
+    display:flex;
+    justify-content: center;
+
+}
+.header .header-fade-in .logo{
+    
+    display:flex;
+    height:max-content;
+    align-self: center;
+}
+
+.card{
+    background-color: #DAE9F2;
+}
+.forget-pwd:hover{
+    text-decoration: underline;
+    text-underline-position: below;
+    color: grey;
+    cursor:pointer;
+}
+.ml3 {
+    font-weight: 900;
+    font-size: 3.5em;
+  }
+.header{
+    margin-bottom:32px;
+}
+.emp-details{
+    display:flex;
+    justify-content: start;
+    flex-direction: column;
+}
+@media screen and (max-width:768px){
+    .btn.btn-success{
+        width:100%;
+    }
+}

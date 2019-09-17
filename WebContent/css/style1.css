@@ -1,0 +1,48 @@
+body
+{
+background-color:#d0e4fe;
+   
+}
+h1
+{
+color:orange;
+text-align:center;
+}
+p
+{
+font-family:"Times New Roman";
+font-size:20px;
+}
+
+.form-control{
+    margin-top:0px;
+    font-size: 18px;
+    width: 80px;
+    margin-left: 20px;
+     margin-right: 30px;
+    margin-bottom:0px;
+}
+
+.btn-block{
+    margin-top:10px;
+}
+
+
+
+.container-fluid{
+  #outline: 10px solid orange;
+  #margin-top:300px;
+  box-shadow: -1px 1px 60px 10px black;
+   
+}
+
+
+#cover {
+   background: url(back1.jpg);
+  #background-size: cover;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+   
+}

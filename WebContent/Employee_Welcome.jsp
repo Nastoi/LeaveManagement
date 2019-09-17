@@ -37,10 +37,17 @@
 				<c:param name="command" value="LEAVE" />
 				<c:param name="empNo" value="${ User.empNo }"/>
 				<c:param name="ename" value="${ User.ename }"/>
+				<c:param name="mgr" value="${ User.mgr }"/>
 			</c:url>
 			 <a href="${ Leave }" class="btn btn-info">Leave application</a>
                      
-                      
+           <c:url var="Manage" value="LeaveController">
+				<c:param name="command" value="MANAGE" />
+				<c:param name="empNo" value="${ User.empNo }"/>
+				<c:param name="ename" value="${ User.ename }"/>
+				<c:param name="mgr" value="${ User.mgr }"/>
+			</c:url>
+			 <a href="${ Manage }" class="btn btn-info">Manager application</a>
                     </div>
                     
                   </div>

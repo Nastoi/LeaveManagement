@@ -8,20 +8,20 @@
 </head>
 <body>
 
-	<form action="EmployeeController">
+	<form action="LeaveController" >
 		<input type="hidden" name="command" value="ADD">
 		<input type="hidden" name="ename" value="${ User.ename }">
-		<input type="hidden" name="empId" value="${ User.empId }">
+		<input type="hidden" name="empNo" value="${ User.empNo }">
+		<input type="hidden" name="mgr" value="${ User.mgr }"/>
 		<select name="leaveType">
 			<option value="maternity">Maternity Leave</option>
 			<option value="sick">Sick Leave</option>
 			<option value="hospitalized">Hospitalized leave</option>
 		</select><br>
-		<br> From date: <input type="date" name="fromDate"><br>
-		<br> To date: <input type="date" name="toDate"><br>
-		<br> Total days: <input type="number" name="totalDays"><br>
-		<br> Reason:
-		<textarea rows="4" cols="50" name="reason"> 
+		<br> From date: <input type="text" name="fromDate"><br>
+		<br> To date: <input type="text" name="toDate"><br>
+		<br> Total days: <input type="number" name="totalDay"><br>
+		<br> Reason: <textarea rows="4" cols="50" name="reason"> 
 
 </textarea>
 		<br>
