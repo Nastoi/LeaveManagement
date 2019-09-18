@@ -516,9 +516,6 @@ public class LeaveController extends HttpServlet {
 
 		private void addLeave(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			
-
-	            System.out.println(request.getParameter("empNo"));
-	            System.out.println(request.getParameter("leaveType"));
 	            String ename = request.getParameter("ename");
 	            int employNo = Integer.parseInt(request.getParameter("empNo"));
 	            String leaveType = request.getParameter("leaveType");
@@ -710,7 +707,6 @@ public class LeaveController extends HttpServlet {
 				{
 					employee = new EmployeeDbUtil();
 					String ename = rst.getString("ename");
-					int empno = empNo;
 					int mgr = rst.getInt("mgr");
 					String role = rst.getString("role");
 					int casual_leave = rst.getInt("casual_leave");

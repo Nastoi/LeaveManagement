@@ -57,7 +57,7 @@ $(document).ready(function() {
 					  type: "GET",
 					  url: "LeaveController",
 					  data: {
-						  command: "LOGOUT"
+						  command: "logout"
 					  }
 					});
 			  }
@@ -80,18 +80,7 @@ $(document).ready(function() {
 		+ totalLeaveDays + '&leaveReason=' + leaveReason
 		+ '&ename=' + ename + '&mgr=' + mgr;
 		event.preventDefault();
-		
-		
 		Swal.fire({
-			html: "Please check to double confirm<br><br>" +
-				"<table border=3, border-spacing:0 15px><tr><th>Leave Type</th><th>From Date</th><th>To Date</th><th>No. of days</th><th>Reason </th></tr> " +
-				"<tr><td> "+leaveType+ "</td><td>" +leaveStartDate+ "</td><td>" +leaveEndDate+ "</td><td>" +totalLeaveDays+ "</td><td>" +leaveReason+ "</td></tr></table>"
-	
-	
-		
-		}).then((result) => {
-			if(result.value) {
-				Swal.fire({			
 			  title: 'Are you sure?',
 			  text: "Submit leave",
 			  type: 'warning',
@@ -99,9 +88,6 @@ $(document).ready(function() {
 			  confirmButtonColor: '#3085d6',
 			  cancelButtonColor: '#d33',
 			  confirmButtonText: 'Confirm'
-				});
-			}
-		
 			}).then((result) => {
 			  if (result.value) {
 				  Swal.fire({
@@ -117,12 +103,7 @@ $(document).ready(function() {
 					  url: "LeaveController",
 					  data: dataString
 					});
-				  
 			  }
 			})
-			
 	});
-
-	
-	
 });
