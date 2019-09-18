@@ -169,6 +169,9 @@
 			</c:url>
 			 <a href="${ DISPLAYREJECTEDONLY }" class="btn btn-success">Rejected Requests</a>
                     </div>
+                    <div class="function">
+			 <a href="index.html" class="btn btn-secondary">LOGOUT</a>
+                    </div>
                   </div>
                   
         	</div>
@@ -194,7 +197,7 @@
                   <tr>
                         <th scope="row">3 </th>
                         <th scope="row">Reporting Manager</th>
-                        <td></td>
+                        <td>${ mgrName }</td>
                       </tr>
                       <tr>
                             <th scope="row">4 </th>

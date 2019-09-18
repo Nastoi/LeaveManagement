@@ -69,9 +69,6 @@ public class LeaveController extends HttpServlet {
 			case "DISPLAYREJECTED":
 				displayRejectedLeaves(request,response);
 				break;
-			case "LOGOUT":
-				getUser(request,response);
-				break;
 			default:
 				leavePage(request, response);
 			}
@@ -165,7 +162,7 @@ public class LeaveController extends HttpServlet {
 
 	private void rejectLeave(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		int reqId = Integer.parseInt(request.getParameter("reqId"));
+		int req_Id = Integer.parseInt(request.getParameter("reqId"));
 		int empNo = Integer.parseInt(request.getParameter("empNo"));
 		String leaveType = request.getParameter("leaveType");
 		String fromDate = request.getParameter("startDate");
@@ -204,7 +201,7 @@ public class LeaveController extends HttpServlet {
 	            
 	            String query1 = "DELETE FROM request WHERE req_Id=? ";
 	            pstmt = con.prepareStatement(query1);
-	            pstmt.setInt(1, reqId);
+	            pstmt.setInt(1, req_Id);
 	            
 	            pstmt.executeUpdate();
             
@@ -229,9 +226,10 @@ public class LeaveController extends HttpServlet {
                 SendEmail sm = new SendEmail();
                 sm.sendMail(mgrEmail, empEmail, text);
 
-                managerPage(request,response);
+                
 				
 	        }finally {
+	        	managerPage(request,response);
 	            close(con, pstmt, rst);
 	        }
         
@@ -276,7 +274,7 @@ public class LeaveController extends HttpServlet {
 		private void approveLeave(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			
 			
-			int empNo = Integer.parseInt(request.getParameter("empNo"));
+			int empNo = Integer.parseInt(request.getParameter("empNo1"));
 			String leaveType = request.getParameter("leaveType");
 			String fromDate = request.getParameter("startDate");
 			String tDate = request.getParameter("endDate");
@@ -383,10 +381,11 @@ public class LeaveController extends HttpServlet {
                 	
                 }
                 
+               SendEmail sm = new SendEmail();
+               sm.sendMail(mgrEmail, empEmail, text);
                
 	        }finally {
-	        	SendEmail sm = new SendEmail();
-                sm.sendMail(mgrEmail, empEmail, text);
+	        	
                 managerPage(request,response);
 	            close(con, pstmt, rst);
 	        }
@@ -400,8 +399,10 @@ public class LeaveController extends HttpServlet {
 			List<EmployeeDbUtil> listEmployee = new ArrayList<>();
 			EmployeeDbUtil employee = null;
 			
+			System.out.println(Integer.parseInt(request.getParameter("mgr")));
 			int empNo = Integer.parseInt(request.getParameter("empNo"));
 			String ename = request.getParameter("ename");
+			int mgr = Integer.parseInt(request.getParameter("mgr"));
 			
 			Connection con = null;
 	        PreparedStatement pstmt = null;
@@ -428,8 +429,10 @@ public class LeaveController extends HttpServlet {
 	            	listEmployee.add(employee);
 	          	}
 	            
+	            employee = new EmployeeDbUtil(empNo,mgr);
+	            	
 	            request.setAttribute("TEAM_LIST", listEmployee);
-	            request.setAttribute("Id",empNo);
+	            request.setAttribute("User",employee);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/manager_leave.jsp");
 				dispatcher.forward(request, response);
 				
@@ -596,6 +599,7 @@ public class LeaveController extends HttpServlet {
 
 		private void getUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			int empNo = Integer.parseInt(request.getParameter("empNo"));
+			int mgr1 = Integer.parseInt(request.getParameter("mgr"));
 			
 			Connection con=null;
 			PreparedStatement pstmt=null;
@@ -608,18 +612,35 @@ public class LeaveController extends HttpServlet {
 				pstmt = con.prepareStatement(qry);
 				pstmt.setInt(1, empNo);
 				rst=pstmt.executeQuery();
+				EmployeeDbUtil employee= null;
 				
 				if(rst.next())
 				{
 					
 					String ename = rst.getString("ename");
-					int empNo1 = empNo;
+					int empno = empNo;
 					int mgr = rst.getInt("mgr");
+					String role = rst.getString("role");
+					int casual_leave = rst.getInt("casual_leave");
+					int sick_leave = rst.getInt("sick_leave");
+					int paternity_leave = rst.getInt("paternity_leave");
+					int maternity_leave = rst.getInt("maternity_leave");
+					int compensate_leave = rst.getInt("compensate_leave");
 					
-					EmployeeDbUtil  employee = new EmployeeDbUtil(ename,empNo1,mgr);
+					employee = new EmployeeDbUtil(ename,empNo,mgr,role,casual_leave, sick_leave, paternity_leave, maternity_leave, compensate_leave);
 					
 					
 					request.setAttribute("User", employee );
+					
+					String qry1="select ename from employee where empno = ?";
+					pstmt = con.prepareStatement(qry1);
+					pstmt.setInt(1, mgr1);
+					rst=pstmt.executeQuery();
+					if(rst.next())
+					{
+						String mgrName = rst.getString("ename");
+						request.setAttribute("mgrName", mgrName);
+					}
 					
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/Employee_Welcome.jsp");
 					
@@ -687,7 +708,6 @@ public class LeaveController extends HttpServlet {
 				
 				if(rst.next())
 				{
-					System.out.println("Congratulations......");
 					employee = new EmployeeDbUtil();
 					String ename = rst.getString("ename");
 					int empno = empNo;
@@ -703,6 +723,16 @@ public class LeaveController extends HttpServlet {
 					employee = new EmployeeDbUtil(ename,empNo,mgr,role,casual_leave, sick_leave, paternity_leave, maternity_leave, compensate_leave);
 					
 					request.setAttribute("User", employee );
+					
+					String qry1="select ename from employee where empno = ?";
+					pstmt = con.prepareStatement(qry1);
+					pstmt.setInt(1, mgr);
+					rst=pstmt.executeQuery();
+					if(rst.next())
+					{
+						String mgrName = rst.getString("ename");
+						request.setAttribute("mgrName", mgrName);
+					}
 					
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/Employee_Welcome.jsp");
 					

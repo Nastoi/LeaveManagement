@@ -56,10 +56,10 @@
 					<c:param name="endDate" value="${ temp.endDate }"/>
 					<c:param name="totalDay" value="${ temp.totalDay }"/>
 					<c:param name="reason" value="${ temp.reason }"/>
-					<c:param name="empNo" value="${ temp.empNo }"/>
+					<c:param name="empNo1" value="${ temp.empNo }"/>
 					<c:param name="reqId" value="${ temp.req_Id }" />
-					<c:param name="mgr" value="${ Id }"/>
-					<c:param name="empNo" value="${ Id }" />
+					<c:param name="mgr" value="${ User.empNo }"/>
+					<c:param name="empNo" value="${ User.empNo }"/>
 					<c:param name="status" value="approve" />
 				</c:url>
 			
@@ -71,22 +71,32 @@
 					<c:param name="endDate" value="${ temp.endDate }"/>
 					<c:param name="totalDay" value="${ temp.totalDay }"/>
 					<c:param name="reason" value="${ temp.reason }"/>
-					<c:param name="empNo" value="${ temp.empNo }"/>
+					<c:param name="empNo1" value="${ temp.empNo }"/>
 					<c:param name="reqId" value="${ temp.req_Id }" />
-					<c:param name="mgr" value="${ Id }"/>
-					<c:param name="empNo" value="${ Id }" />
+					<c:param name="mgr" value="${ User.empNo }"/>
+					<c:param name="empNo" value="${ User.empNo }"/>
 					<c:param name="status" value="reject" />
 				</c:url>
 					
-                  <td class="text-center"><a href="${ Approve }"><button type="button" class="btn btn-primary" >Approve</button></a>&nbsp;
+                  <td class="text-center"><a href="${ Approve }"><button type="button" class="btn btn-primary">Approve</button></a>&nbsp;
                   <a href="${ Reject }"><button type="button" class="btn btn-danger">Decline</button></a></td>
                 </tr> 
              </c:forEach>
           </tbody>
         </table>
+   			    <c:url var="back" value="LeaveController">
+					<c:param name="empNo" value="${ User.empNo }"/>
+					<c:param name="ename" value="${ User.ename }"/>
+					<c:param name="mgr" value="${ User.mgr }"/>
+					<c:param name="command" value="BACK"/>
+				</c:url>
+				
+				<a href="${ back }"><button id="back" type="button"
+							class="btn btn-light mt-3 float-left">
+							Back
+						</button></a>
 </div>
 		
-		
-<input type="hidden" name="mgr" value="${ temp.mgrNo }">
+
 </body>
 </html>

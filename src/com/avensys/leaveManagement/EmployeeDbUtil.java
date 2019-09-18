@@ -92,6 +92,14 @@ public class EmployeeDbUtil {
 		
 	}
 	
+	public EmployeeDbUtil(int empNo, String ename) {
+		this.empNo = empNo;
+		this.ename = ename;
+	}
+	public EmployeeDbUtil(int empNo, int mgr) {
+		this.empNo = empNo;
+		this.mgr = mgr;
+	}
 	public String getEname() {
 		return ename;
 	}
@@ -250,6 +258,8 @@ public class EmployeeDbUtil {
 	public void setCompensate_leave(int compensate_leave) {
 		this.compensate_leave = compensate_leave;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "EmployeeDbUtil [ename=" + ename + ", job=" + job + ", email=" + email + ", pass=" + pass + ", role="

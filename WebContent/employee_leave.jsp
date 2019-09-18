@@ -134,10 +134,10 @@ body {
 							class="btn btn-light mt-3 float-left">
 							Back
 						</button></a>
-						<button id="logout" type="button"
+						<a href="index.html"><button id="logout" type="button"
 							class="btn btn-light mt-3 float-right">
 							Logout
-						</button>
+						</button></a>
 					</div>
 				</div>
 			</div>
