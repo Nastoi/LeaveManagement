@@ -94,15 +94,18 @@ $(document).ready(function() {
 					  type: 'success',
 					  title: 'Leave Submitted',
 					  showConfirmButton: false,
-					  timer: 4500
+					  timer: 100000
 					})
+					
 					$( "#form input, textarea, select, #submit, #cancel" ).prop( "disabled", true );
 				  	$('#afterSubmit').append("<span class='alert alert-info' role='alert'>Leave request submitted to manager, please wait for approval from manager.</span>");
-				  $.ajax({
+				  	setTimeout(function(){history.back();}, 3000);
+				  	$.ajax({
 					  type: "GET",
 					  url: "LeaveController",
 					  data: dataString
 					});
+				  
 			  }
 			})
 	});

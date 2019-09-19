@@ -4,7 +4,7 @@ public class EmployeeDbUtil {
 
 	public String ename, job, email, pass, role, req_Id, leaveType, endDate, startDate, reason, status, mgr1;
 	public int deptNo, empNo, mgr, totalDay, empNo1, mgrNo,casual_leave, sick_leave, paternity_leave,maternity_leave,compensate_leave;
-	
+
 	
 
 	public EmployeeDbUtil(String req_Id, String leaveType, String startDate, String endDate, int totalDay,
@@ -258,8 +258,6 @@ public class EmployeeDbUtil {
 	public void setCompensate_leave(int compensate_leave) {
 		this.compensate_leave = compensate_leave;
 	}
-	
-	
 	@Override
 	public String toString() {
 		return "EmployeeDbUtil [ename=" + ename + ", job=" + job + ", email=" + email + ", pass=" + pass + ", role="
